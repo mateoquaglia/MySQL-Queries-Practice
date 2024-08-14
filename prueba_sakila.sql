@@ -1,10 +1,11 @@
 use sakila;
-with clientes as ( -- Seleccionamos los clientes que no tienen peliculas pendientes de devolucion
+with clientes as ( -- Seleccionamos los clientes que no tienen peliculas pendientes de devolucion 
+                   -- con with creamos una tabla temporal o varias como en este caso, la primera es clientes y la segunda es MesAnio, separadas por una ","
     select
         c.customer_id, 
         c.last_name,
         c.first_name,
-        count(r.rental_id) as CANTTOTAL  
+        count(r.rental_id) as CANTTOTAL  -- funcion de agregacion para contar la cantidad de peliculas rentadas 
     from 
         customer c
         join rental r on r.customer_id = c.customer_id  -- Unimos las tablas customer y rental 
@@ -12,7 +13,7 @@ with clientes as ( -- Seleccionamos los clientes que no tienen peliculas pendien
         not exists ( -- Verificamos que no existan peliculas pendientes de devolucion
             select 1
             from rental ren 
-            where ren.customer_id = c.customer_id  
+            where ren.customer_id = c.customer_id   
             and ren.return_date is null  
         )
     group by
@@ -28,7 +29,7 @@ MesAnio as (
         count(*) as cant
     from
         customer c
-        join rental r on r.customer_id = c.customer_id
+        join rental r on r.customer_id = c.customer_id 
     where
         (month(r.rental_date), year(r.rental_date)) = (
             select month(rental_date), year(rental_date)
