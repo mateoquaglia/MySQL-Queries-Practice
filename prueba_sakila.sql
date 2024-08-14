@@ -1,19 +1,19 @@
 use sakila;
-with clientes as (
+with clientes as ( -- Seleccionamos los clientes que no tienen peliculas pendientes de devolucion
     select
-        c.customer_id,
+        c.customer_id, 
         c.last_name,
         c.first_name,
         count(r.rental_id) as CANTTOTAL  
     from 
         customer c
-        join rental r on r.customer_id = c.customer_id 
+        join rental r on r.customer_id = c.customer_id  -- Unimos las tablas customer y rental 
     where 
-        not exists (
+        not exists ( -- Verificamos que no existan peliculas pendientes de devolucion
             select 1
             from rental ren 
-            where ren.customer_id = c.customer_id 
-            and ren.return_date is null 
+            where ren.customer_id = c.customer_id  
+            and ren.return_date is null  
         )
     group by
         c.customer_id,
