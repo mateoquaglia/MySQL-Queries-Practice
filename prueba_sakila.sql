@@ -10,7 +10,7 @@ with clientes as ( -- Seleccionamos los clientes que no tienen peliculas pendien
         customer c
         join rental r on r.customer_id = c.customer_id  -- Unimos las tablas customer y rental 
     where 
-        not exists ( -- Verificamos que no existan peliculas pendientes de devolucion
+        not exists ( -- Verificamos que no existan peliculas pendientes de devolucion 
             select 1
             from rental ren 
             where ren.customer_id = c.customer_id   
