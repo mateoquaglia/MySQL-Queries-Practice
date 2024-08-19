@@ -5,7 +5,7 @@ SELECT
     COUNT(r.rental_id) AS "Cantidad de alquileres"
 FROM 
     category c
-CROSS JOIN 
+CROSS JOIN  
     actor a
 LEFT JOIN 
     film_actor fa ON a.actor_id = fa.actor_id
