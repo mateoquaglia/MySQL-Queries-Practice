@@ -1,4 +1,4 @@
-
+ 
 SELECT 
     c.name AS "Nombre de la categoría",
     CONCAT(a.first_name, ' ', a.last_name) AS "Nombre y apellido del actor",
